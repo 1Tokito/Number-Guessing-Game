@@ -1,0 +1,189 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #6a82fb, #fc5c7d);
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 100px auto; /* Increased top margin to move the container down */
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 100px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 25px rgba(0, 123, 255, 0.7); /* Glow effect */
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        p.description {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px; /* Add some space between the items */
+        }
+
+        .info-item {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(249, 249, 249, 0.9);
+            border-radius: 10px;
+            width: calc(33.33% - 20px); /* Adjusted width for 3 items */
+            margin: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative; /* For glow effect */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 10px;
+            background-color: rgba(0, 123, 255, 0.1); /* Light blue glow */
+            opacity: 0; /* Initially invisible */
+            transition: opacity 0.3s ease;
+            z-index: 0; /* Behind content */
+        }
+
+        .info-item:hover::before {
+            opacity: 1; /* Show glow on hover */
+        }
+
+        .info-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-item img {
+            width: 70px; /* Adjusted icon size */
+            height: 70px;
+            margin-bottom: 15px;
+            background-color: #007BFF;
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-item h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 500;
+            position: relative;
+            z-index: 1; /* Above glow */
+        }
+
+        .info-item p {
+            font-size: 1.1rem;
+            color: #666;
+            position: relative;
+            z-index: 1; /* Above glow */
+        }
+
+        .back-link {
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            text-decoration: none;
+            color: white;
+            background-color: #007BFF;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-link a:hover {
+            background-color: #0056b3;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .info-item {
+                width: 90%;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Contact Us</h1>
+        <p class="description">We'd love to hear from you! Whether you have a question, feedback, or just want to say hello, feel free to reach out to us.</p>
+        
+        <div class="contact-info">
+            <div class="info-item">
+                <img src="{% static 'img/letter.png' %}" alt="Email Icon">
+                <h3>Email</h3>
+                <p>foxamizs@gmail.com</p>
+            </div>
+            <div class="info-item">
+                <img src="{% static 'img/location.png' %}" alt="Address Icon">
+                <h3>Address</h3>
+                <p>Allen avenue Aptech</p>
+            </div>
+            <div class="info-item">
+                <img src="{% static 'img/play.png' %}" alt="Phone Icon">
+                <h3>Phone</h3>
+                <p>(+234) 08104448013</p>
+            </div>
+        </div>
+
+        <div class="back-link">
+            <a href="{% url 'home' %}">Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

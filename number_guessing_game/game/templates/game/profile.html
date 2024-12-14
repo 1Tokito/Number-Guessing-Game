@@ -1,0 +1,297 @@
+<!-- templates/game/profile.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username }}'s Profile</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #e9ecef; /* Light background for a softer look */
+            color: #333;
+            line-height: 1.6; /* Improved line height for readability */
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px; /* Padding for the header */
+            border-radius: 10px; /* Rounded corners */
+            background-color: #ffffff; /* White background for header */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+        }
+
+        h1 {
+            color: #007BFF; /* Primary color for titles */
+            font-size: 2.5rem; /* Larger title size */
+            margin-bottom: 10px;
+            position: relative; /* Position for the underline effect */
+        }
+
+        h1::after {
+            content: '';
+            display: block;
+            width: 50%;
+            height: 4px;
+            background: #007BFF; /* Primary color for the underline */
+            margin: 10px auto; /* Center the underline */
+            border-radius: 5px; /* Rounded edges for the underline */
+        }
+
+        h2 {
+            color: #495057; /* Darker grey for subheadings */
+            margin: 5px 0; /* Adjusted margin for spacing */
+            font-weight: 500; /* Medium weight for subheadings */
+        }
+
+        .bio, .achievements, .tips {
+            background-color: #ffffff; /* White background for sections */
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+            margin-bottom: 20px;
+        }
+
+        .achievements ul, .tips ul {
+            list-style-type: none; /* Remove bullet points */
+            padding: 0;
+        }
+
+        .achievements li, .tips li {
+            padding: 10px;
+            border-bottom: 1px solid #dee2e6; /* Divider for achievements */
+            transition: background-color 0.3s; /* Transition effect */
+        }
+
+        .achievements li:hover, .tips li:hover {
+            background-color: #f1f1f1; /* Hover effect */
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background-color: #ffffff; /* White background for tables */
+            border-radius: 10px; /* Rounded corners */
+            overflow: hidden; /* Ensures rounded corners are respected */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Softer shadow for depth */
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #dee2e6; /* Lighter border for table rows */
+        }
+
+        th {
+            background-color: #007BFF; /* Primary color for table headers */
+            color: white;
+            text-transform: uppercase; /* Uppercase for table headers */
+            letter-spacing: 1px; /* Slight letter spacing */
+        }
+
+        tr.hidden {
+            display: none; /* Hide rows with this class */
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* Space between buttons */
+            margin: 20px 0; /* Margin for spacing */
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #007BFF; /* Primary color for buttons */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+            font-size: 1rem; /* Button font size */
+            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.4); /* Button shadow for depth */
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #28a745; /* Green color for back button */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+            box-shadow: 0 2px 8px rgba(40, 167, 69, 0.4); /* Button shadow for depth */
+            margin: 20px auto; /* Center the button */
+        }
+
+        .back-button:hover {
+            background-color: #218838; /* Darker shade on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem; /* Responsive title size */
+            }
+
+            h2 {
+                font-size: 1.2rem; /* Responsive subheading size */
+            }
+
+            table {
+                font-size: 0.9rem; /* Smaller font for smaller screens */
+            }
+
+            button {
+                padding: 10px 15px; /* Smaller button on mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header style="text-align: center; margin-bottom: 40px; padding: 20px; border-radius: 10px; background-color: #ffffff; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);">
+        <h1 style="color: #007BFF; font-size: 2.5rem; margin-bottom: 10px; position: relative;"> Profile of {{ user.username }}</h1>
+        <h1 style="content: ''; display: block; width: 50%; height: 4px; background: #007BFF; margin: 10px auto; border-radius: 5px;"></h1>
+        <h2 style="color: #495057; margin: 5px 0; font-weight: 500;">Total Games: {{ total_games }}</h2>
+        <h2 style="color: #495057; margin: 5px 0; font-weight: 500;">Total Wins: {{ total_wins }}</h2>
+        <h2 style="color: #495057; margin: 5px 0; font-weight: 500;">Best Score: {{ best_score }}</h2>
+    </header>
+    
+    <div class="bio" style="margin-bottom: 20px;">
+        <h2 style="color: #007BFF; font-size: 1.8rem; border-bottom: 2px solid #007BFF; padding-bottom: 5px; margin-bottom: 15px;">Achievements</h2>
+        <div class="achievements" style="background-color: #ffffff; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <ul style="list-style-type: none; padding: 0;">
+                <li style="padding: 10px; border-bottom: 1px solid #dee2e6; transition: background-color 0.3s;">
+                    <strong>Completed:</strong> {{ total_games }} games
+                </li>
+                <li style="padding: 10px; border-bottom: 1px solid #dee2e6; transition: background-color 0.3s;">
+                    <strong>Best Score:</strong> {{ best_score }}
+                </li>
+                <li style="padding: 10px; border-bottom: 1px solid #dee2e6; transition: background-color 0.3s;">
+                    <strong>Wins:</strong> {{ total_wins }} out of {{ total_games }} games
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="tips" style="margin-bottom: 20px;">
+        <h2 style="color: #007BFF; font-size: 1.8rem; border-bottom: 2px solid #007BFF; padding-bottom: 5px; margin-bottom: 15px;">Tips & Tricks</h2>
+        <ul style="list-style-type: none; padding: 0; background-color: #ffffff; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <li style="padding: 10px; border-bottom: 1px solid #dee2e6; transition: background-color 0.3s;">Start by guessing the middle number of your range.</li>
+            <li style="padding: 10px; border-bottom: 1px solid #dee2e6; transition: background-color 0.3s;">Analyze previous guesses to avoid repeating them.</li>
+            <li style="padding: 10px; border-bottom: 1px solid #dee2e6; transition: background-color 0.3s;">Stay calm and take your time; there's no rush!</li>
+            <li style="padding: 10px; border-bottom: 1px solid #dee2e6; transition: background-color 0.3s;">Practice makes perfect; keep playing to improve your skills!</li>
+            <li style="padding: 10px; border-bottom: 1px solid #dee2e6; transition: background-color 0.3s;">Challenge your friends for a fun gaming experience!</li>
+        </ul>
+    </div>
+    
+
+    <h2>Game Results:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Level</th>
+                <th>Attempts</th>
+                <th>Score</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody id="gameResults">
+            {% for game in games %}
+            <tr class="game-item">
+                <td>{{ game.level }}</td>
+                <td>{{ game.attempts }}</td>
+                <td>{{ game.score }}</td>
+                <td>{{ game.created_at }}</td>  {# Ensure you have a created_at field in your Game model #}
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No game results found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="button-container">
+        <button id="showMoreBtn">Show More</button>
+        <button id="showAllBtn" style="display: none;">Show All</button>
+        <button id="hideBtn" style="display: none;">Hide</button>
+    </div>
+
+    <a href="{% url 'home' %}" class="back-button">Back to Home</a>
+
+    <script>
+        const gameItems = document.querySelectorAll('.game-item');
+        const showMoreBtn = document.getElementById('showMoreBtn');
+        const showAllBtn = document.getElementById('showAllBtn');
+        const hideBtn = document.getElementById('hideBtn');
+        let currentItems = 5; // Number of currently shown items
+        let itemsToShowMore = 3; // Number of items to show when "Show More" is clicked
+        const totalItems = gameItems.length; // Total items
+
+        // Initially hide all items beyond the first 5
+        gameItems.forEach((item, index) => {
+            if (index >= currentItems) {
+                item.classList.add('hidden');
+            }
+        });
+
+        showMoreBtn.addEventListener('click', () => {
+            const hiddenItems = Array.from(gameItems).filter(item => item.classList.contains('hidden'));
+            const itemsToReveal = hiddenItems.slice(0, itemsToShowMore); // Get the next items to reveal
+
+            itemsToReveal.forEach(item => {
+                item.classList.remove('hidden'); // Show the next items
+            });
+
+            currentItems += itemsToReveal.length; // Increase current items count
+
+            // If all items are shown, adjust button visibility
+            if (currentItems >= totalItems) {
+                showMoreBtn.style.display = 'none'; // Hide "Show More" if all items are shown
+                showAllBtn.style.display = 'none'; // Hide "Show All" button if all items are shown
+            } else if (currentItems > 5) {
+                showAllBtn.style.display = 'block'; // Show "Show All" button
+            }
+        });
+
+        showAllBtn.addEventListener('click', () => {
+            // Show all items
+            gameItems.forEach(item => {
+                item.classList.remove('hidden');
+            });
+            currentItems = totalItems; // Set current items to total items
+            showAllBtn.style.display = 'none'; // Hide "Show All"
+            hideBtn.style.display = 'block'; // Show "Hide" button
+            showMoreBtn.style.display = 'none'; // Hide "Show More"
+        });
+
+        hideBtn.addEventListener('click', () => {
+            // Hide all items and show only the first 5
+            gameItems.forEach(item => {
+                item.classList.add('hidden');
+            });
+            for (let i = 0; i < 5 && gameItems[i]; i++) {
+                gameItems[i].classList.remove('hidden');
+            }
+            currentItems = 5; // Reset current items to 5
+            showMoreBtn.style.display = 'block'; // Show "Show More" button again
+            showAllBtn.style.display = 'none'; // Hide "Show All" button
+            hideBtn.style.display = 'none'; // Hide "Hide" button
+        });
+    </script>
+</body>
+</html>

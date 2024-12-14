@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #6a82fb, #fc5c7d, #87CEEB, #007BFF);
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 700px; /* Adjusted width for better fit */
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px; /* Reduced padding for balance */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            margin: 20px; /* Added margin for spacing */
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        p.intro {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            letter-spacing: 0.5px;
+        }
+
+        textarea {
+            width: 90%;
+            height: 180px;
+            padding: 15px; /* Adjusted padding */
+            border-radius: 12px;
+            border: 2px solid #007BFF;
+            background-color: rgba(255, 255, 255, 0.8);
+            resize: none;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: #0056b3;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            text-transform: uppercase;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            box-shadow: 0 7px 15px rgba(0, 0, 91, 0.4);
+        }
+
+        .back-link {
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            text-decoration: none;
+            color: white;
+            background-color: #007BFF;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-link a:hover {
+            background-color: #0056b3;
+            box-shadow: 0 7px 15px rgba(0, 0, 91, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 15px; /* Adjusted margin for mobile */
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            p.intro {
+                font-size: 1rem;
+            }
+
+            textarea {
+                height: 140px;
+            }
+
+            button {
+                font-size: 1.1rem;
+                padding: 10px 25px;
+            }
+
+            .back-link a {
+                font-size: 1.1rem;
+                padding: 10px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Submit Feedback</h1>
+        <p class="intro">We value your feedback! Please share your thoughts to help us improve.</p>
+        <form method="POST">
+            {% csrf_token %}
+            <textarea name="content" required placeholder="Enter your feedback..."></textarea>
+            <button type="submit">Submit</button>
+        </form>
+        <div class="back-link">
+            <a href="{% url 'home' %}">Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>

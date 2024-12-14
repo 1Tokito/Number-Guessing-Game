@@ -1,0 +1,141 @@
+{% extends "game.html" %}
+{% block content %}
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            animation: gradient 10s ease infinite; /* Animated background */
+            background: linear-gradient(135deg, #6a82fb, #fc5c7d, #87CEEB, #007BFF);
+            background-size: 400% 400%; /* Size for the gradient */
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .game-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.2s; /* Animation effect on hover */
+        }
+
+        .game-container:hover {
+            transform: scale(1.02); /* Slight scaling effect on hover */
+        }
+
+        h1 {
+            color: #007BFF;
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Subtle text shadow for depth */
+        }
+
+        .difficulty,
+        .attempts {
+            font-size: 1.5rem;
+            margin: 10px 0;
+            font-weight: 500; /* Semi-bold for emphasis */
+            color: #555; /* Darker color for readability */
+        }
+
+        .hint {
+            background-color: #e1f5fe;
+            border: 1px solid #81d4fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            font-weight: 600;
+            color: #0d47a1;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for hint box */
+        }
+
+        .guess-form {
+            margin-top: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: #555;
+            font-weight: 600; /* Bold for clarity */
+        }
+
+        .guess-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #007BFF; /* Blue border for input */
+            border-radius: 10px;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+            outline: none; /* Remove outline */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for input */
+        }
+
+        .guess-input:focus {
+            border-color: #0056b3; /* Darker border on focus */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Glow effect */
+        }
+
+        .submit-btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem; /* Smaller header for smaller screens */
+            }
+
+            .difficulty,
+            .attempts {
+                font-size: 1.3rem; /* Smaller font for mobile */
+            }
+
+            .guess-input,
+            .submit-btn {
+                font-size: 1rem; /* Smaller input and button font size for mobile */
+            }
+        }
+    </style>
+
+    <div class="game-container">
+        <h1>Guess the Number!</h1>
+
+        <p class="difficulty">You are playing on <strong>{{ difficulty }}</strong> difficulty.</p>
+        <p class="attempts">Attempt <strong>{{ attempts }}</strong> of 10</p>
+
+        {% if hint %}
+            <div class="hint">{{ hint }}</div>
+        {% endif %}
+
+        <form method="POST" action="{% url 'guess' %}" class="guess-form">
+            {% csrf_token %}
+            <label for="guess">Enter your guess:</label>
+            <input type="number" id="guess" name="guess" required class="guess-input" placeholder="Type your number here...">
+            <button type="submit" class="submit-btn">Submit Guess</button>
+        </form>
+    </div>
+{% endblock %}

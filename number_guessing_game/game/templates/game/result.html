@@ -1,0 +1,99 @@
+{% extends "game.html" %}
+{% block content %}
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #ffffff);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .game-over-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .game-over-container:hover {
+            transform: scale(1.02); /* Slight scaling effect on hover */
+        }
+
+        h1 {
+            color: #ff3d00; /* Vibrant orange for title */
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .result-message {
+            font-size: 1.5rem;
+            margin: 20px 0;
+            font-weight: 500; /* Semi-bold for emphasis */
+            color: #555; /* Darker color for readability */
+        }
+
+        .win {
+            color: #4caf50; /* Green for winning message */
+            font-weight: bold; /* Bold for emphasis */
+        }
+
+        .lose {
+            color: #f44336; /* Red for losing message */
+            font-weight: bold; /* Bold for emphasis */
+        }
+
+        .play-again {
+            display: inline-block;
+            margin-top: 30px;
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .play-again:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .result-message {
+                font-size: 1.2rem; /* Smaller font for mobile */
+            }
+
+            .play-again {
+                font-size: 1rem; /* Smaller button font size for mobile */
+            }
+        }
+    </style>
+
+    <div class="game-over-container">
+        {% if result == 'correct' %}
+            <h1>Congratulations!</h1>
+            <p class="result-message win">You guessed the correct number in <strong>{{ attempts }}</strong> attempts!</p>
+            <p>Your score is: <strong>{{game_instance.score}}</strong></p> <!-- Assuming score is calculated based on attempts -->
+        {% else %}
+            <h1>Game Over</h1>
+            <p class="result-message lose">Sorry, you've used all your attempts. The correct number was <strong>{{ target_number }}</strong>.</p>
+        {% endif %}
+
+        <a href="{% url 'game' %}" class="play-again">Play Again</a>
+    </div>
+{% endblock %}
